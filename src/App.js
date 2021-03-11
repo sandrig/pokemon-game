@@ -1,17 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+import { Header, Layout, Footer } from './components'
+import BgImage from './assets/bg1.jpg'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hello World, React.JS!
-        </p>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+export const App = () => (
+  <>
+    <Header title="Pokemon game" descr="Pokemon Trading Card Game" />
+    <Layout title="Title 1" descr="First description for layout " urlBg={BgImage} />
+    <Layout title="Title 2" descr="Second description for layout" colorBg="#e2e2e2"/>
+    <Layout title="Title 3" descr="Third description for layout" urlBg={BgImage}  />
+    <Footer />
+  </>
+)
