@@ -4,8 +4,8 @@ export const Header = ({ title, descr }) => (
   <header className={s.root}>
     <div className={s.forest}></div>
     <div className={s.container}>
-      {title && <h1>{title}</h1>}
-      {descr && <p>{descr}</p>}
+      <h1>{title}</h1>
+      <p>{descr}</p>
     </div>
   </header>
 )
