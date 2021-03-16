@@ -13,7 +13,7 @@ import s from './style.module.css'
 
 
 export const HomePage = ({ onChangePage }) => {
-  const handleClickButton = (page) => {
+  const handleClickButton = page => {
     onChangePage && onChangePage(page)
   }
 
