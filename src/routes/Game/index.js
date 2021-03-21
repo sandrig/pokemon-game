@@ -45,8 +45,8 @@ export const GamePage = () => {
       id: Date.now(),
     }
 
-    const id = database.ref().child('pokemons').push().key
-    database.ref('pokemons/' + id).set(newPokemon)
+    const newKey = database.ref().child('pokemons').push().key
+    database.ref('pokemons/' + newKey).set(newPokemon)
     database.ref('pokemons').once('value', snapshot => {
       setPokemons(snapshot.val())
     })
