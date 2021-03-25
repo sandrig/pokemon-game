@@ -10,7 +10,7 @@ import s from './style.module.css'
 
 export const StartPage = () => {
   const firebase = useContext(FireBaseContext)
-  const pokemonsContext = useContext(PokemonContext)
+  const pokemonContext = useContext(PokemonContext)
   const history = useHistory()
   const [pokemons, setPokemons] = useState({})
 
@@ -26,7 +26,7 @@ export const StartPage = () => {
 
   const handleChangeSelected = key => {
     const pokemon = { ...pokemons[key] }
-    pokemonsContext.onSelectedPokemons(key, pokemon)
+    pokemonContext.onSelectedPokemons(key, pokemon)
     setPokemons(prevState => ({
       ...prevState,
       [key]: {
@@ -45,7 +45,7 @@ export const StartPage = () => {
       <div className={s.buttonWrap}>
         <button
           onClick={handleStartGameClick}
-          disabled={Object.keys(pokemonsContext.pokemons).length < 5}
+          disabled={Object.keys(pokemonContext.pokemons).length < 5}
         >
           Start Game
         </button>
@@ -65,7 +65,7 @@ export const StartPage = () => {
               isSelected={selected}
               onClickCard={() => {
                 if (
-                  Object.keys(pokemonsContext.pokemons).length < 5 ||
+                  Object.keys(pokemonContext.pokemons).length < 5 ||
                   selected
                 ) {
                   handleChangeSelected(key)
