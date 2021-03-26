@@ -31,11 +31,15 @@ export const FinishPage = () => {
         isSelected: item.id === card.id,
       })),
     )
-    setSelectedCard(card)
+    if (player1.length > player2.length) {
+      setSelectedCard(card)
+    }
   }
 
   const handleEndGameClick = () => {
-    fireBaseContext.addPokemon(selectedCard)
+    if (selectedCard) {
+      fireBaseContext.addPokemon(selectedCard)
+    }
     pokemonContext.clearPokemonContext()
     history.replace('/game')
   }
