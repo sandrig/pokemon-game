@@ -12,11 +12,11 @@ export const PokemonCard = ({
   minimize,
   isActive,
   isSelected,
-  onClickCard,
+  onCardClick,
   possession,
 }) => {
   const handleClickCard = () => {
-    onClickCard && onClickCard(id)
+    onCardClick && onCardClick(id)
   }
 
   return (

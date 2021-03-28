@@ -1,32 +1,31 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 import { PokemonCard } from '../../../../components/PokemonCard'
-
-import { FireBaseContext } from '../../../../context/firebaseContext'
-import { PokemonContext } from '../../../../context/pokemonContext'
+import { getPokemonAsync, selectPokemonsData } from '../../../../store/pokemons'
+import { selectPokemons1Data, setPokemons1 } from '../../../../store/pokemons1'
 
 import s from './style.module.css'
 
 export const StartPage = () => {
-  const firebase = useContext(FireBaseContext)
-  const pokemonContext = useContext(PokemonContext)
+  const pokemonsRedux = useSelector(selectPokemonsData)
+  const pokemons1Redux = useSelector(selectPokemons1Data)
+  const dispatch = useDispatch()
   const history = useHistory()
   const [pokemons, setPokemons] = useState({})
 
   useEffect(() => {
-    firebase.getPokemonSocket(pokemons => {
-      setPokemons(pokemons)
-    })
-
-    return () => {
-      firebase.offPokemonSocket()
-    }
+    dispatch(getPokemonAsync())
   }, [])
 
-  const handleChangeSelected = key => {
+  useEffect(() => {
+    setPokemons(pokemonsRedux)
+  }, [pokemonsRedux])
+
+  const handleActiveSelected = key => {
     const pokemon = { ...pokemons[key] }
-    pokemonContext.onSelectedPokemons(key, pokemon)
+
     setPokemons(prevState => ({
       ...prevState,
       [key]: {
@@ -34,6 +33,8 @@ export const StartPage = () => {
         selected: !prevState[key].selected,
       },
     }))
+
+    dispatch(setPokemons1({ key, pokemon }))
   }
 
   const handleStartGameClick = () => {
@@ -45,7 +46,7 @@ export const StartPage = () => {
       <div className={s.buttonWrap}>
         <button
           onClick={handleStartGameClick}
-          disabled={Object.keys(pokemonContext.pokemons).length < 5}
+          disabled={Object.keys(pokemons1Redux).length < 5}
         >
           Start Game
         </button>
@@ -63,12 +64,9 @@ export const StartPage = () => {
               values={values}
               isActive={true}
               isSelected={selected}
-              onClickCard={() => {
-                if (
-                  Object.keys(pokemonContext.pokemons).length < 5 ||
-                  selected
-                ) {
-                  handleChangeSelected(key)
+              onCardClick={() => {
+                if (Object.keys(pokemons1Redux).length < 5 || selected) {
+                  handleActiveSelected(key)
                 }
               }}
             />
