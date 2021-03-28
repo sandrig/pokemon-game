@@ -23,7 +23,7 @@
 }
 
 .pokemonCard.active {
-  animation: flipFront 1000ms 300ms forwards;
+  transform: rotateY(0deg);
 }
 
 @keyframes flipFront {
@@ -126,51 +126,74 @@
 .fire {
   background-color: var(--fire);
 }
+
 .grass {
   background-color: var(--grass);
 }
+
 .electric {
   background-color: var(--electric);
 }
+
 .water {
   background-color: var(--water);
 }
+
 .ground {
   background-color: var(--ground);
 }
+
 .rock {
   background-color: var(--rock);
 }
+
 .fairy {
   background-color: var(--fairy);
 }
+
 .poison {
   background-color: var(--poison);
 }
+
 .bug {
   background-color: var(--bug);
 }
+
 .dragon {
   background-color: var(--dragon);
 }
+
 .psychic {
   background-color: var(--psychic);
 }
+
 .flying {
   background-color: var(--flying);
 }
+
 .fighting {
   background-color: var(--fighting);
 }
+
 .normal {
   background-color: var(--normal);
+}
+
+.red {
+  background-color: #d998b2;
+}
+
+.blue {
+  background-color: #a8caea;
 }
 
 .pokemon .imgContainer {
   background-color: rgba(255, 255, 255, 0.6);
   border-radius: 50%;
-  width: 140px;
-  height: 140px;
+  width: 9vw;
+  height: 9vw;
+  /*width: 140px;*/
+  /*height: 140px;*/
   text-align: center;
   margin-bottom: 20px;
 }

@@ -8,6 +8,7 @@ import { PokemonContext } from '../../context/pokemonContext'
 
 export const GamePage = () => {
   const [selectedPokemons, setSelectedPokemons] = useState({})
+  const [finishBoard, setFinishBoard] = useState([])
   const match = useRouteMatch()
 
   const handleSelectedPokemons = (key, pokemon) => {
@@ -26,11 +27,19 @@ export const GamePage = () => {
     })
   }
 
+  const clearPokemonContext = () => {
+    setSelectedPokemons({})
+    setFinishBoard([])
+  }
+
   return (
     <PokemonContext.Provider
       value={{
         pokemons: selectedPokemons,
         onSelectedPokemons: handleSelectedPokemons,
+        finishBoard,
+        setFinishBoard,
+        clearPokemonContext,
       }}
     >
       <Switch>
