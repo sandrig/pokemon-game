@@ -10,7 +10,7 @@ import { MenuHeader } from './components/MenuHeader'
 import { Footer } from './components/Footer'
 
 import { FireBaseContext } from './context/firebaseContext'
-import { Firebase } from './service/firebase'
+import { FirebaseClass } from './service/firebase'
 
 import s from './style.module.css'
 
@@ -20,7 +20,7 @@ export const App = () => {
     location.pathname === '/' || location.pathname === '/game/board'
 
   return (
-    <FireBaseContext.Provider value={new Firebase()}>
+    <FireBaseContext.Provider value={FirebaseClass}>
       <Switch>
         <Route path="/404" component={NotFoundPage} />
         <Route>

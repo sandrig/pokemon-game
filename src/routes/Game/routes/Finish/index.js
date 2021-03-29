@@ -1,26 +1,25 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import cn from 'classnames'
 
 import { PokemonCard } from '../../../../components/PokemonCard'
 
-import s from './style.module.css'
+import { selectPokemons1Data } from '../../../../store/pokemons1'
+import { selectPokemons2Data } from '../../../../store/pokemons2'
+import { FirebaseClass } from '../../../../service/firebase'
 
-import { FireBaseContext } from '../../../../context/firebaseContext'
-import { PokemonContext } from '../../../../context/pokemonContext'
+import s from './style.module.css'
 
 export const FinishPage = () => {
   const history = useHistory()
 
-  const fireBaseContext = useContext(FireBaseContext)
-  const pokemonContext = useContext(PokemonContext)
+  const pokemons1Redux = useSelector(selectPokemons1Data)
+  const pokemons2Redux = useSelector(selectPokemons2Data)
 
-  const player1 = Object.values(pokemonContext.pokemons).map(item => ({
-    ...item,
-  }))
-
+  const player1 = Object.values(pokemons1Redux).map(item => ({ ...item }))
   const [player2, setPlayer2] = useState(() =>
-    pokemonContext.finishBoard.map(item => ({ ...item, isSelected: false })),
+    pokemons2Redux.map(item => ({ ...item, isSelected: false })),
   )
   const [selectedCard, setSelectedCard] = useState(null)
 
@@ -38,9 +37,8 @@ export const FinishPage = () => {
 
   const handleEndGameClick = () => {
     if (selectedCard) {
-      fireBaseContext.addPokemon(selectedCard)
+      FirebaseClass.addPokemon(selectedCard)
     }
-    pokemonContext.clearPokemonContext()
     history.replace('/game')
   }
 

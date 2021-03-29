@@ -1,11 +1,14 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 import { PokemonCard } from '../../../../components/PokemonCard'
 import { PlayerBoard } from './component/PlayerBoard'
 import { Result } from '../../../../components/Result'
 import { ArrowChoice } from '../../../../components/ArrowChoice'
-import { PokemonContext } from '../../../../context/pokemonContext'
+
+import { selectPokemons1Data } from '../../../../store/pokemons1'
+import { setPokemons2 } from '../../../../store/pokemons2'
 
 import s from './style.module.css'
 
@@ -34,10 +37,10 @@ const randomInteger = (min, max) => {
 const randomSide = randomInteger(1, 2)
 
 export const BoardPage = () => {
-  const { pokemons, setFinishBoard } = useContext(PokemonContext)
+  const pokemons1Redux = useSelector(selectPokemons1Data)
   const [board, setBoard] = useState([])
   const [player1, setPlayer1] = useState(() => {
-    return Object.values(pokemons).map(item => ({
+    return Object.values(pokemons1Redux).map(item => ({
       ...item,
       possession: 'blue',
     }))
@@ -50,6 +53,7 @@ export const BoardPage = () => {
   const [stop, setStop] = useState(false)
 
   const history = useHistory()
+  const dispatch = useDispatch()
 
   useEffect(async () => {
     const boardResponse = await fetch(
@@ -75,10 +79,10 @@ export const BoardPage = () => {
       setSide(randomSide)
     }, 3000)
 
-    setFinishBoard(player2Request.data.map(item => ({ ...item })))
+    dispatch(setPokemons2(player2Request.data.map(item => ({ ...item }))))
   }, [])
 
-  if (Object.keys(pokemons).length === 0) {
+  if (Object.keys(pokemons1Redux).length === 0) {
     history.replace('/game')
   }
 
